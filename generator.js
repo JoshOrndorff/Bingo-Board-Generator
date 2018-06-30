@@ -3,54 +3,64 @@
 window.addEventListener("DOMContentLoaded", () => {
 
   var boardDim = 5
-  var numBoards = 3
   var defaultActivities = `Balerinas join the party\nSomeone climbs the balcony\nBricky sighting`
+  var defaultNumBoards = 25
 
   var activitiesBox = document.getElementById("activities")
   var boardsContainer = document.getElementById("boards")
   var genButton = document.getElementById("generate-button")
+  var numBoardsBox = document.getElementById("num-boards")
 
-  // If there are no activities, use the defaults
+  // Check for user-supplied values, and use defaults if necessary
   if(activitiesBox.value === ""){
     activitiesBox.value = defaultActivities
   }
-
-  // Handle clicks on the generate button
-  genButton.addEventListener("click", () => generateBoards(numBoards))
-
-  /**
-   * Generates the given number of boards replacing any previously generated boards.
-   * @param n the number of boards to generate
-   */
-  function generateBoards(n) {
-    // Clear out old boards
-    boardsContainer.innerHTML = ""
-
-    // Create the requested number of new boards
-    while (n-- > 0) {
-      let nameLine = document.createElement("h1")
-      nameLine.innerHTML = "Player&nbsp;Name:&nbsp;______________________"
-      boards.append(nameLine)
-
-      let newBoard = document.createElement("div")
-      newBoard.classList.add("board")
-      generateBoard(newBoard)
-      boards.append(newBoard)
-    }
+  if(numBoardsBox.value === ""){
+    numBoardsBox.value = defaultNumBoards
   }
 
 
+  // Handle clicks on the generate button
+  genButton.addEventListener("click", () => generateBoards())
+
   /**
-   * Generates one bingo board in the given element.
-   * @param div The div element to populate with a board
+   * Generates the DOM-supplied number of boards, replacing any previous boards.
    */
-  function generateBoard(div){
-    // Get activities from DOM and confirm there are enough
+  function generateBoards() {
+    // Validate activities
     var activities = activitiesBox.value.split("\n")
     if (activities.length < boardDim ** 2){
       alert("You have entered " + activities.length + " of the minimum" + boardDim ** 2 + " activities.")
       return
     }
+
+    //TODO Validate number of boards
+    var numBoards = parseInt(numBoardsBox.value)
+
+    // Clear out old boards
+    boardsContainer.innerHTML = ""
+
+    // Create the requested number of new boards
+    while (numBoards-- > 0) {
+      let nameLine = document.createElement("h1")
+      nameLine.innerHTML = "Player Name: ______________________"
+      boards.append(nameLine)
+
+      let newBoard = document.createElement("div")
+      newBoard.classList.add("board")
+      generateBoard(newBoard, activities)
+      boards.append(newBoard)
+    }
+  }
+
+  /**
+   * Generates one bingo board in the given element from the given activities.
+   * @param div The div element to populate with a board
+   * @param activs The activities to choose from when generating.
+   */
+  function generateBoard(div, activs){
+    // Duplicate the activities so we can safely mutate them
+    var activities = activs.slice()
 
     // Make all the boxes and insert them
     for(var i = 0; i < boardDim ** 2; i++){
