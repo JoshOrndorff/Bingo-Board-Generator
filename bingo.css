@@ -1,20 +1,49 @@
-#activities {
-  width: 500px;
-  height: 200px;
+/*** Setup and instructions formatting ***/
+
+#instructions {
+  display: flex;
+  flex-direction: row;
+  width: 1000px;
 }
 
-#board {
+.instruction {
+  flex-basis: 33%;
+}
+
+@media print{
+  #instructions {
+    display: none;
+  }
+}
+
+
+
+
+/*** Actual Bingo Board Formatting ***/
+h1 {
+  display: block;
+  margin: 40px auto;
+}
+
+#boards {
+  width: 100%;
+}
+
+.board {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-column-gap: 5px;
   grid-row-gap: 5px;
-  width: 500px;
-  height: 500px;
+
+  width: 100%;
+  margin-bottom: 50px;
+
+  page-break-after:always
 }
 
 .box {
-  height: 100px;
+  height: 120px;
   border: solid 1px black;
   border-radius: 10px;
 

@@ -3,10 +3,11 @@
 window.addEventListener("DOMContentLoaded", () => {
 
   var boardDim = 5
+  var numBoards = 3
   var defaultActivities = `Balerinas join the party\nSomeone climbs the balcony\nBricky sighting`
 
   var activitiesBox = document.getElementById("activities")
-  var boardContainer = document.getElementById("board")
+  var boardsContainer = document.getElementById("boards")
   var genButton = document.getElementById("generate-button")
 
   // If there are no activities, use the defaults
@@ -14,14 +15,36 @@ window.addEventListener("DOMContentLoaded", () => {
     activitiesBox.value = defaultActivities
   }
 
-  // Add click listener to generate button
-  genButton.addEventListener("click", generateOne)
+  // Handle clicks on the generate button
+  genButton.addEventListener("click", () => generateBoards(numBoards))
+
+  /**
+   * Generates the given number of boards replacing any previously generated boards.
+   * @param n the number of boards to generate
+   */
+  function generateBoards(n) {
+    // Clear out old boards
+    boardsContainer.innerHTML = ""
+
+    // Create the requested number of new boards
+    while (n-- > 0) {
+      let nameLine = document.createElement("h1")
+      nameLine.innerHTML = "Player&nbsp;Name:&nbsp;______________________"
+      boards.append(nameLine)
+
+      let newBoard = document.createElement("div")
+      newBoard.classList.add("board")
+      generateBoard(newBoard)
+      boards.append(newBoard)
+    }
+  }
 
 
   /**
-   * Generates one bingo board
+   * Generates one bingo board in the given element.
+   * @param div The div element to populate with a board
    */
-  function generateOne(){
+  function generateBoard(div){
     // Get activities from DOM and confirm there are enough
     var activities = activitiesBox.value.split("\n")
     if (activities.length < boardDim ** 2){
@@ -46,7 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
       var box = document.createElement("div")
       box.classList.add("box")
       box.innerHTML = text
-      boardContainer.append(box)
+      div.append(box)
     }
   }
 
