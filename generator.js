@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", () => {
    */
   function generateBoards() {
     // Validate activities
-    var activities = activitiesBox.value.split("\n")
+    var activities = activitiesBox.value.split("\n").filter(line => line !== "")
     if (activities.length < boardDim ** 2){
       alert("You have entered " + activities.length + " of the minimum" + boardDim ** 2 + " activities.")
       return
