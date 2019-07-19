@@ -66,14 +66,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Make all the boxes and insert them
     for(var i = 0; i < boardDim ** 2; i++){
+      var text = "<br />" // hack for vertical centering
       // Special case to get center text
-      var text;
       if (i == Math.floor((boardDim **2)/2)){
-        text = center
+        text += center
       }
       else {
         var index = Math.floor(Math.random()*activities.length)
-        text = activities[index]
+        text += activities[index]
         activities.splice(index, 1)
       }
 
