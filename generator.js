@@ -5,12 +5,15 @@ window.addEventListener("DOMContentLoaded", () => {
   var boardDim = 5
   var defaultActivities = `Balerinas join the party\nSomeone climbs the balcony\nBricky sighting`
   var defaultNumBoards = 25
+  var defaultCenter = "_____ got married today!"
+  var defaultPreamble = "Make new friends and get BINGO. You may use each person's name once. You must make friends with the person to use their name."
 
   var activitiesBox = document.getElementById("activities")
   var boardsContainer = document.getElementById("boards")
   var genButton = document.getElementById("generate-button")
   var numBoardsBox = document.getElementById("num-boards")
   var centerTileBox = document.getElementById("center-tile")
+  var preambleBox = document.getElementById("preamble")
 
   // Check for user-supplied values, and use defaults if necessary
   if(activitiesBox.value === ""){
@@ -18,6 +21,12 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   if(numBoardsBox.value === ""){
     numBoardsBox.value = defaultNumBoards
+  }
+  if(centerTileBox.value === ""){
+    centerTileBox.value = defaultCenter
+  }
+  if(preambleBox.value === ""){
+    preambleBox.value = defaultPreamble
   }
 
 
@@ -35,17 +44,24 @@ window.addEventListener("DOMContentLoaded", () => {
       return
     }
 
-    //TODO Validate number of boards
+    // Validate number of boards
     var numBoards = parseInt(numBoardsBox.value)
+    console.log(numBoards)
+    if (isNaN(numBoards) || numBoards < 1) {
+      alert("You must generate at least one board")
+    }
 
     // Clear out old boards
     boardsContainer.innerHTML = ""
-
     // Create the requested number of new boards
     while (numBoards-- > 0) {
       let nameLine = document.createElement("h1")
-      nameLine.innerHTML = "Player Name: ______________________"
+      nameLine.innerHTML = "Wedding Bingo"
       boards.append(nameLine)
+
+      let instructions = document.createElement("p")
+      instructions.innerHTML = preambleBox.value
+      boards.append(instructions)
 
       let newBoard = document.createElement("div")
       newBoard.classList.add("board")
