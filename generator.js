@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
   var boardsContainer = document.getElementById("boards")
   var genButton = document.getElementById("generate-button")
   var numBoardsBox = document.getElementById("num-boards")
+  var centerTileBox = document.getElementById("center-tile")
 
   // Check for user-supplied values, and use defaults if necessary
   if(activitiesBox.value === ""){
@@ -48,7 +49,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
       let newBoard = document.createElement("div")
       newBoard.classList.add("board")
-      generateBoard(newBoard, activities)
+      generateBoard(newBoard, activities, centerTileBox.value)
       boards.append(newBoard)
     }
   }
@@ -57,8 +58,9 @@ window.addEventListener("DOMContentLoaded", () => {
    * Generates one bingo board in the given element from the given activities.
    * @param div The div element to populate with a board
    * @param activs The activities to choose from when generating.
+   * @param center Text for the center square
    */
-  function generateBoard(div, activs){
+  function generateBoard(div, activs, center){
     // Duplicate the activities so we can safely mutate them
     var activities = activs.slice()
 
@@ -67,7 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
       // Special case to get center text
       var text;
       if (i == Math.floor((boardDim **2)/2)){
-        text = "Have a drink"
+        text = center
       }
       else {
         var index = Math.floor(Math.random()*activities.length)
